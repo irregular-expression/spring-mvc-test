@@ -1,5 +1,5 @@
 package springtest.service;
 
-public interface ApiService extends OrderApi, TourApi, UserApi {
+public interface ApiService {
     boolean auth(String login, String password);
 }
