@@ -23,7 +23,7 @@ public class ApiController {
     }
 
     @GetMapping("/auth")
-    public Response showStatus(@RequestParam(value = "login") String login, @RequestParam(value = "password") String password) {
+    public Response auth(@RequestParam(value = "login") String login, @RequestParam(value = "password") String password) {
         return apiService.auth(login, password) ? new Response(SUCCESS_STATUS, CODE_SUCCESS) :
                                                   new Response(ERROR_STATUS, AUTH_FAILURE);
     }
