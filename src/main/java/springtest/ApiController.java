@@ -16,9 +16,9 @@ public class ApiController {
     private static final int CODE_SUCCESS = 1;
     private static final int AUTH_FAILURE = 102;
 
-    @Autowired private ApiService apiService;
+    private ApiService apiService;
 
-    public void setApiService(ApiService apiService) {
+    @Autowired public void setApiService(ApiService apiService) {
         this.apiService = apiService;
     }
 
