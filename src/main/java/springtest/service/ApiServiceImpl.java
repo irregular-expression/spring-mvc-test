@@ -10,7 +10,6 @@ import springtest.data.Tour;
 import springtest.data.User;
 
 import java.math.BigInteger;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -20,128 +19,89 @@ public class ApiServiceImpl implements ApiService {
     private UserDao userDao;
     private TourDao tourDao;
 
-    @Autowired
-    public void setOrderDao(OrderDao orderDao) {
+    @Autowired public void setOrderDao(OrderDao orderDao) {
         this.orderDao = orderDao;
     }
-
-    @Autowired
-    public void setUserDao(UserDao userDao) {
+    @Autowired public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
-
-    @Autowired
-    public void setTourDao(TourDao tourDao) {
+    @Autowired public void setTourDao(TourDao tourDao) {
         this.tourDao = tourDao;
     }
 
+
     @Override
-    public List<Order> allOrders() {
-        return null;
+    public List<Order> getAllOrders() {
+        return orderDao.getAllOrders();
     }
 
     @Override
-    public List<Order> allOrdersByUser(BigInteger userId) {
-        return null;
+    public void addOrder(Order order) {
+        orderDao.add(order);
     }
 
     @Override
-    public List<Order> allOrdersByTour(BigInteger tourId) {
-        return null;
+    public void deleteOrder(Order order) {
+        orderDao.delete(order);
     }
 
     @Override
-    public List<Order> allConfirmedOrders(boolean confirmed) {
-        return null;
-    }
-
-    @Override
-    public void add(Order order) {
-
-    }
-
-    @Override
-    public void delete(Order order) {
-
-    }
-
-    @Override
-    public void edit(Order order) {
-
-    }
-
-    @Override
-    public List<Tour> allTours() {
-        return null;
-    }
-
-    @Override
-    public List<Tour> allToursByName(String name) {
-        return null;
-    }
-
-    @Override
-    public List<Tour> allToursByLocation(String location) {
-        return null;
-    }
-
-    @Override
-    public List<Tour> allToursByDescription(String description) {
-        return null;
-    }
-
-    @Override
-    public List<Tour> allToursInTimePeriod(Date start, Date end) {
-        return null;
-    }
-
-    @Override
-    public void add(Tour tour) {
-
-    }
-
-    @Override
-    public void delete(Tour tour) {
-
-    }
-
-    @Override
-    public void edit(Tour tour) {
-
-    }
-
-    @Override
-    public Tour getTourById(BigInteger id) {
-        return null;
-    }
-
-    @Override
-    public List<User> allUsers() {
-        return null;
-    }
-
-    @Override
-    public void add(User user) {
-
-    }
-
-    @Override
-    public void delete(User user) {
-
-    }
-
-    @Override
-    public void edit(User user) {
-
-    }
-
-    @Override
-    public User getUserById(BigInteger id) {
-        return null;
+    public void editOrder(Order order) {
+        orderDao.edit(order);
     }
 
     @Override
     public Order getOrderById(BigInteger id) {
-        return null;
+        return orderDao.getById(id);
+    }
+
+    @Override
+    public List<Tour> getAllTours() {
+        return tourDao.getAllTours();
+    }
+
+    @Override
+    public void addTour(Tour tour) {
+        tourDao.add(tour);
+    }
+
+    @Override
+    public void deleteTour(Tour tour) {
+        tourDao.delete(tour);
+    }
+
+    @Override
+    public void editTour(Tour tour) {
+        tourDao.edit(tour);
+    }
+
+    @Override
+    public Tour getTourById(BigInteger id) {
+        return tourDao.getById(id);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userDao.getAllUsers();
+    }
+
+    @Override
+    public void addUser(User user) {
+        userDao.add(user);
+    }
+
+    @Override
+    public void deleteUser(User user) {
+        userDao.delete(user);
+    }
+
+    @Override
+    public void editUser(User user) {
+       userDao.edit(user);
+    }
+
+    @Override
+    public User getUserById(BigInteger id) {
+        return userDao.getById(id);
     }
 }

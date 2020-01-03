@@ -22,7 +22,7 @@ public class ApiController {
         this.apiService = apiService;
     }
 
-    @GetMapping
+    @GetMapping("/show")
     public BaseResponse showStatus() {
         return new BaseResponse(SUCCESS_STATUS, 1);
     }

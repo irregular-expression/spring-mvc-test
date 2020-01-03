@@ -1,4 +1,4 @@
 package springtest.service;
 
-public interface ApiService extends OrderService, TourService, UserService {
+public interface ApiService extends OrderApi, TourApi, UserApi {
 }

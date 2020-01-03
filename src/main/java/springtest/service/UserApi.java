@@ -5,11 +5,11 @@ import springtest.data.User;
 import java.math.BigInteger;
 import java.util.List;
 
-public interface UserService {
-    List<User> allUsers();
-    void add(User user);
-    void delete(User user);
-    void edit(User user);
+public interface UserApi {
+    List<User> getAllUsers();
+    void addUser(User user);
+    void deleteUser(User user);
+    void editUser(User user);
     User getUserById(BigInteger id);
 
 }

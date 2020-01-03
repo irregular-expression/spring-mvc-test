@@ -1,43 +1,24 @@
 package springtest.data;
 
-
-import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.Date;
 
-@Entity
-@Table(name = "users")
 public class User {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger userId;
-
-    @Column(name = "firstName")
+    private BigInteger id;
     private String firstName;
-
-    @Column(name = "lastName")
     private String lastName;
-
-    @Column(name = "email")
     private String email;
-
-    @Column(name = "password")
     private String password;
-
-    @Column(name = "active")
     private boolean active;
-
-    @Column(name = "birthday")
     private Date birthday;
 
-    public BigInteger getUserId() {
-        return userId;
+    public BigInteger getId() {
+        return id;
     }
 
-    public void setUserId(BigInteger userId) {
-        this.userId = userId;
+    public void setId(BigInteger id) {
+        this.id = id;
     }
 
     public String getFirstName() {

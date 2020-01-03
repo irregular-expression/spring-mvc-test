@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.util.Date;
 
 public class Tour {
-    private BigInteger tourId;
+    private BigInteger id;
     private String name;
     private String description;
     private String location;
