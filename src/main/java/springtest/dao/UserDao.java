@@ -6,6 +6,7 @@ import springtest.data.User;
 import java.math.BigInteger;
 import java.util.List;
 
+@Mapper
 public interface UserDao {
 
     @Select("SELECT * FROM users")
@@ -22,6 +23,9 @@ public interface UserDao {
 
     @Select("SELECT * FROM users WHERE id = #{id}")
     User getById(@Param("id") BigInteger id);
+
+    @Select("SELECT * FROM users WHERE email = #{email} AND password = #{password}")
+    User getByEmailAndPassword(@Param("email") String email, @Param("password") String password);
 
     @Insert("INSERT INTO users(firstName, lastName, email, password, active, birthday) VALUES(#{firstName}, #{lastName}, #{email}, #{password}, #{active}, #{birthday})")
     @Options(useGeneratedKeys=true, keyProperty="id")

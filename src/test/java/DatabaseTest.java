@@ -11,9 +11,9 @@ import springtest.data.User;
 import java.math.BigInteger;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = PersistenceConfig.class)
@@ -30,12 +30,15 @@ public class DatabaseTest {
     }
 
     @Test
-    public void isDaoCreatedCorrectly_onDefaultUser() {
+    public void isUserDaoCreatedCorrectly_onDefaultUser() {
         User user = userDao.getById(BigInteger.ONE);
         assertNotNull(user);
         assertEquals(user.getId(), BigInteger.ONE);
         assertEquals(user.getFirstName(), "Vasya");
         assertEquals(user.getLastName(), "Pupkin");
+
+        List<User> users = userDao.getAllUsers();
+        assertTrue(users.size() > 0);
     }
 
 }

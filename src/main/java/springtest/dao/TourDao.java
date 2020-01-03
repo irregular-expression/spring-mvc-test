@@ -4,9 +4,9 @@ import org.apache.ibatis.annotations.*;
 import springtest.data.Tour;
 
 import java.math.BigInteger;
-import java.util.Date;
 import java.util.List;
 
+@Mapper
 public interface TourDao {
     @Select("SELECT * FROM tours")
     @Results({

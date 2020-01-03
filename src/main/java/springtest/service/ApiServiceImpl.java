@@ -29,6 +29,17 @@ public class ApiServiceImpl implements ApiService {
         this.tourDao = tourDao;
     }
 
+    @Override
+    public boolean auth(String login, String password) {
+         User user = userDao.getByEmailAndPassword(login, password);
+         if (user == null) {
+             return false;
+         } else {
+             user.setActive(true);
+             userDao.edit(user);
+             return true;
+         }
+    }
 
     @Override
     public List<Order> getAllOrders() {
@@ -104,4 +115,6 @@ public class ApiServiceImpl implements ApiService {
     public User getUserById(BigInteger id) {
         return userDao.getById(id);
     }
+
+
 }

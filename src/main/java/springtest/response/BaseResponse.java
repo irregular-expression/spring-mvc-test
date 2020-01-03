@@ -1,6 +1,6 @@
 package springtest.response;
 
-public class BaseResponse {
+public abstract class BaseResponse {
     private final String status;
     private final Integer code;
 

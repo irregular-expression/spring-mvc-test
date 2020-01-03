@@ -6,6 +6,7 @@ import springtest.data.Order;
 import java.math.BigInteger;
 import java.util.List;
 
+@Mapper
 public interface OrderDao {
     @Select("SELECT * FROM orders")
     @Results({

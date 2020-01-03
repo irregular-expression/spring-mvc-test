@@ -3,6 +3,7 @@ package springtest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springtest.response.BaseResponse;
+import springtest.response.Response;
 import springtest.service.ApiService;
 
 @RestController
@@ -12,19 +13,19 @@ public class ApiController {
     private final String sharedKey = "SHARED_KEY";
     private static final String SUCCESS_STATUS = "success";
     private static final String ERROR_STATUS = "error";
-    private static final int CODE_SUCCESS = 100;
+    private static final int CODE_SUCCESS = 1;
     private static final int AUTH_FAILURE = 102;
 
-    private ApiService apiService;
+    @Autowired private ApiService apiService;
 
-    @Autowired
     public void setApiService(ApiService apiService) {
         this.apiService = apiService;
     }
 
-    @GetMapping("/show")
-    public BaseResponse showStatus() {
-        return new BaseResponse(SUCCESS_STATUS, 1);
+    @GetMapping("/auth")
+    public Response showStatus(@RequestParam(value = "login") String login, @RequestParam(value = "password") String password) {
+        return apiService.auth(login, password) ? new Response(SUCCESS_STATUS, CODE_SUCCESS) :
+                                                  new Response(ERROR_STATUS, AUTH_FAILURE);
     }
 
     /*
