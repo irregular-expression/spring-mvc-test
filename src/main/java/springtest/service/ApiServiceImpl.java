@@ -10,10 +10,12 @@ import springtest.data.Tour;
 import springtest.data.User;
 
 import java.math.BigInteger;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ApiServiceImpl implements ApiService {
+
+    private Map<String, User> users = new HashMap<>();
 
     private OrderDao orderDao;
     private UserDao userDao;
@@ -30,15 +32,38 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
-    public boolean auth(String login, String password) {
+    public Optional<String> login(String login, String password) {
          User user = userDao.getByEmailAndPassword(login, password);
-         if (user == null) {
-             return false;
-         } else {
+         Optional<String> token = Optional.empty();
+         if (user != null) {
+             token = Optional.of(UUID.randomUUID().toString());
              user.setActive(true);
              userDao.edit(user);
-             return true;
+             users.put(token.get(), user);
          }
+         return token;
+    }
+
+    @Override
+    public Optional<User> findByToken(String token) {
+        return Optional.of(users.get(token));
+    }
+
+    @Override
+    public void register(String email, String password) {
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(password);
+        userDao.add(user);
+    }
+
+    @Override
+    public void logout(User user) {
+        for (Map.Entry<String, User> userData : users.entrySet()) {
+            if (userData.getValue().equals(user)) users.remove(userData.getKey());
+        }
+        user.setActive(false);
+        userDao.edit(user);
     }
 
     @Override

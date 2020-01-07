@@ -6,6 +6,7 @@ import springtest.data.User;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 
 /*
     Описание основного функционала api по ТЗ:
@@ -32,8 +33,14 @@ import java.util.List;
 
 public interface ApiService {
 
-    //прямая авторизация
-    boolean auth(String login, String password);
+    //авторизация
+    Optional<String> login(String username, String password);
+
+    Optional<User> findByToken(String token);
+
+    void register(String email, String password);
+
+    void logout(User user);
 
     //получение списка всех доступных туров для просмотра
     List<Tour> getTours();

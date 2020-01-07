@@ -1,14 +1,21 @@
-package springtest;
+package springtest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import springtest.response.BaseResponse;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import springtest.data.User;
 import springtest.response.Response;
+import springtest.response.TokenResponse;
 import springtest.service.ApiService;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
-public class ApiController {
+public class SecureApiController {
 
     private final String sharedKey = "SHARED_KEY";
     private static final String SUCCESS_STATUS = "success";
@@ -22,10 +29,20 @@ public class ApiController {
         this.apiService = apiService;
     }
 
-    @GetMapping("/auth")
-    public Response auth(@RequestParam(value = "login") String login, @RequestParam(value = "password") String password) {
-        return apiService.auth(login, password) ? new Response(SUCCESS_STATUS, CODE_SUCCESS) :
-                                                  new Response(ERROR_STATUS, AUTH_FAILURE);
+    @GetMapping("/current")
+    User getCurrent(@AuthenticationPrincipal final User user) {
+        return user;
+    }
+
+    @GetMapping("/logout")
+    boolean logout(@AuthenticationPrincipal final User user) {
+        apiService.logout(user);
+        return true;
+    }
+
+    @GetMapping("/test")
+    public Response test() {
+        return new Response("secure api is running", CODE_SUCCESS);
     }
 
     /*
