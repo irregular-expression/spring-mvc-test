@@ -1,9 +1,13 @@
 package springtest.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,17 +26,21 @@ import springtest.auth.NoRedirectStrategy;
 import springtest.auth.TokenAuthenticationFilter;
 import springtest.auth.TokenAuthenticationProvider;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled=true)
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //All public urls are laying in /public branch of api, other urls are private.
     private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(new AntPathRequestMatcher("/api/public/**"));
     private static final RequestMatcher PROTECTED_URLS = new NegatedRequestMatcher(PUBLIC_URLS);
 
-    TokenAuthenticationProvider provider;
+    @Autowired TokenAuthenticationProvider provider;
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) {
@@ -96,6 +104,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     AuthenticationEntryPoint forbiddenEntryPoint() {
         return new HttpStatusEntryPoint(FORBIDDEN);
     }
+
+    /*
+    @Bean
+    public AuthenticationManager authenticationManager() {
+        return new ProviderManager(Collections.singletonList(provider));
+    }
+    */
 
     @Bean
     public PasswordEncoder encoder() {
