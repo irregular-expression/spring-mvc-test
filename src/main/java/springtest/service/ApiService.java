@@ -33,32 +33,29 @@ import java.util.Optional;
 
 public interface ApiService {
 
-    //авторизация
+    //интерфейс авторизации в системе
     Optional<String> login(String username, String password);
-
-    Optional<User> findByToken(String token);
-
+    User findByToken(String token);
     void register(String email, String password);
-
     void logout(User user);
 
     //получение списка всех доступных туров для просмотра
     List<Tour> getTours();
 
     //получение списка всех своих заказов
-    List<Order> getOrders();
+    List<Order> getOrders(BigInteger userId);
 
     //получение информации о текущем пользователе
-    User getUser();
+    User getUser(BigInteger userId);
 
-    //обновление данных текущего пользователя
+    //редактирование профиля пользователя
     void editUser(User user);
 
     //забронировать тур, если есть свободные места
     boolean createOrder(BigInteger tourId, BigInteger userId);
 
     //получить список забронированных туров
-    List<Tour> getToursWithOrders();
+    List<Tour> getToursWithOrders(BigInteger userId);
 
     //отменить бронь, если тур ещё не начался
     boolean cancelOrder(Order order);

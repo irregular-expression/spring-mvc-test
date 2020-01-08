@@ -8,6 +8,19 @@ import java.util.List;
 
 @Mapper
 public interface TourDao {
+
+    @Select("SELECT * FROM tours INNER JOIN orders ON tours.id = orders.tourId WHERE orders.userId = #{userId}")
+    @Results({
+            @Result(id=true, property="id", column="id"),
+            @Result(property="name", column="name"),
+            @Result(property="description", column="description"),
+            @Result(property="location", column="location"),
+            @Result(property="startDate", column="startDate"),
+            @Result(property="endDate", column="endDate"),
+            @Result(property="countLimit", column="countLimit"),
+    })
+    List<Tour> getAllOrderedToursForUser(@Param("userId") BigInteger userId);
+
     @Select("SELECT * FROM tours")
     @Results({
             @Result(id=true, property="id", column="id"),

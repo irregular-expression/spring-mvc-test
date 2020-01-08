@@ -1,6 +1,7 @@
 package springtest.data;
 
 import java.math.BigInteger;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Tour {
@@ -66,5 +67,15 @@ public class Tour {
 
     public void setCountLimit(int countLimit) {
         this.countLimit = countLimit;
+    }
+
+    public boolean isStarted() {
+        Calendar calendar = Calendar.getInstance();
+        return startDate.before(calendar.getTime());
+    }
+
+    public boolean isEnded() {
+        Calendar calendar = Calendar.getInstance();
+        return endDate.before(calendar.getTime());
     }
 }

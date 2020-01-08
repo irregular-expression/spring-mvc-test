@@ -15,7 +15,7 @@ import java.util.*;
 @Service
 public class ApiServiceImpl implements ApiService {
 
-    private Map<String, User> users = new HashMap<>();
+    private Map<String, User> users = new HashMap<>(); //TODO: change to in-memory cache database service
 
     private OrderDao orderDao;
     private UserDao userDao;
@@ -45,8 +45,8 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
-    public Optional<User> findByToken(String token) {
-        return Optional.of(users.get(token));
+    public User findByToken(String token) {
+        return users.get(token);
     }
 
     @Override
@@ -68,37 +68,54 @@ public class ApiServiceImpl implements ApiService {
 
     @Override
     public List<Tour> getTours() {
-        return null;
+        return tourDao.getAllTours();
     }
 
     @Override
-    public List<Order> getOrders() {
-        return null;
+    public List<Order> getOrders(BigInteger userId) {
+        return orderDao.getAllOrdersForUser(userId);
     }
 
     @Override
-    public User getUser() {
-        return null;
+    public User getUser(BigInteger userId) {
+        return userDao.getById(userId);
     }
 
     @Override
     public void editUser(User user) {
-
+        userDao.edit(user);
     }
 
     @Override
     public boolean createOrder(BigInteger tourId, BigInteger userId) {
-        return false;
+        Tour tour = tourDao.getById(tourId);
+        User user = userDao.getById(userId);
+        if (tour != null && user != null && tour.getCountLimit() > 0) {
+            tour.setCountLimit(tour.getCountLimit() - 1);
+            tourDao.edit(tour);
+            orderDao.add(new Order(userId, tourId));
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
-    public List<Tour> getToursWithOrders() {
-        return null;
+    public List<Tour> getToursWithOrders(BigInteger userId) {
+        return tourDao.getAllOrderedToursForUser(userId);
     }
 
     @Override
     public boolean cancelOrder(Order order) {
-        return false;
+        Tour tour = tourDao.getById(order.getTourId());
+        if (!tour.isStarted()) {
+            orderDao.delete(order);
+            tour.setCountLimit(tour.getCountLimit() + 1);
+            tourDao.edit(tour);
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

@@ -105,13 +105,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new HttpStatusEntryPoint(FORBIDDEN);
     }
 
-    /*
-    @Bean
-    public AuthenticationManager authenticationManager() {
-        return new ProviderManager(Collections.singletonList(provider));
-    }
-    */
-
     @Bean
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();

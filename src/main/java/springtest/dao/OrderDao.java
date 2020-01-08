@@ -18,6 +18,16 @@ public interface OrderDao {
     })
     List<Order> getAllOrders();
 
+    @Select("SELECT * FROM orders WHERE userId=#{userId}")
+    @Results({
+            @Result(id=true, property="id", column="id"),
+            @Result(property="userId", column="userId"),
+            @Result(property="tourId", column="tourId"),
+            @Result(property="confirmed", column="confirmed"),
+            @Result(property="timeKey", column="timeKey"),
+    })
+    List<Order> getAllOrdersForUser(@Param("userId") BigInteger userId);
+
     @Insert("INSERT INTO orders(userId, tourId, confirmed, timeKey) VALUES(#{userId}, #{tourId}, #{confirmed}, CURRENT_TIMESTAMP)")
     @Options(useGeneratedKeys=true, keyProperty="id")
     void add(Order order);

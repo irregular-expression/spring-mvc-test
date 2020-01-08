@@ -32,7 +32,7 @@ public class TokenAuthenticationProvider extends AbstractUserDetailsAuthenticati
         return Optional
                 .ofNullable(token)
                 .map(String::valueOf)
-                .flatMap(apiService::findByToken)
+                .map(apiService::findByToken)
                 .orElseThrow(() -> new UsernameNotFoundException("Cannot find user with authentication token=" + token));
     }
 }

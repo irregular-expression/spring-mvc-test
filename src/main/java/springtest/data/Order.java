@@ -10,6 +10,13 @@ public class Order {
     private boolean confirmed;
     private Date timeKey;
 
+    public Order() {}
+
+    public Order(BigInteger userId, BigInteger tourId) {
+        this.userId = userId;
+        this.tourId = tourId;
+    }
+
     public BigInteger getId() {
         return id;
     }
